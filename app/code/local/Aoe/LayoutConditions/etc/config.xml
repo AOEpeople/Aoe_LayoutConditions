@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<modules>
+		<Aoe_LayoutConditions>
+			<version>0.1.0</version>
+		</Aoe_LayoutConditions>
+	</modules>
+
+	<global>
+		<helpers>
+			<aoe_layoutconditions>
+				<class>Aoe_LayoutConditions_Helper</class>
+			</aoe_layoutconditions>
+		</helpers>
+		<models>
+			<!--<aoe_layoutconditions>
+				<class>Aoe_LayoutConditions_Model</class>
+			</aoe_layoutconditions>-->
+			<core>
+				<rewrite>
+					<layout>Aoe_LayoutConditions_Model_Layout</layout>
+				</rewrite>
+			</core>
+		</models>
+	</global>
+
+</config>
