@@ -1,2 +1,2 @@
 app/etc/modules/*							app/etc/modules/
-app/code/local/Aoe/LayoutConditions		app/code/local/Aoe/LayoutConditions
+app/code/community/Aoe/LayoutConditions		app/code/community/Aoe/LayoutConditions
