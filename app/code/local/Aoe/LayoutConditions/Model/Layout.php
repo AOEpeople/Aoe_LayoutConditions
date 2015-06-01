@@ -37,8 +37,8 @@ class Aoe_LayoutConditions_Model_Layout extends Mage_Core_Model_Layout
             }
         }
 
-        if (isset($parent['ifhelper']) && ($configPath = (string) $parent['ifhelper'])) {
-            if (!Mage::helper($configPath)->checkLayoutCondition($parent->getBlockName())) {
+        if (isset($parent['ifhelper']) && ($helperCallback = (string) $parent['ifhelper'])) {
+            if (!$this->_checkIfHelper($helperCallback)) {
                 return;
             }
         }
@@ -67,8 +67,8 @@ class Aoe_LayoutConditions_Model_Layout extends Mage_Core_Model_Layout
             }
         }
 
-        if (isset($node['ifhelper']) && ($configPath = (string) $node['ifhelper'])) {
-            if (!Mage::helper($configPath)->checkLayoutCondition($parent->getBlockName())) {
+        if (isset($node['ifhelper']) && ($helperCallback = (string) $node['ifhelper'])) {
+            if (!$this->_checkIfHelper($helperCallback)) {
                 return;
             }
         }
@@ -91,12 +91,38 @@ class Aoe_LayoutConditions_Model_Layout extends Mage_Core_Model_Layout
             }
         }
 
-        if (isset($node['ifhelper']) && ($configPath = (string) $node['ifhelper'])) {
-            if (!Mage::helper($configPath)->checkLayoutCondition($parent->getBlockName())) {
-                return;
+        if (isset($node['ifhelper']) && ($helperCallback = (string) $node['ifhelper'])) {
+            if (!$this->_checkIfHelper($helperCallback)) {
+                return $this;
             }
         }
 
         return parent::_generateAction($node, $parent);
+    }
+
+    /**
+     * @param string $helperCallback config from layout.xml for model callback
+     * @throws Mage_Core_Exception
+     * @return bool
+     */
+    protected function _checkIfHelper($helperCallback)
+    {
+        if (!preg_match(Mage_Cron_Model_Observer::REGEX_RUN_MODEL, $helperCallback, $run)) {
+            Mage::throwException(Mage::helper('cron')->__('Invalid helper/method definition, expecting "helper/class::method".'));
+        }
+        if (!($helper = Mage::helper($run[1])) || !method_exists($helper, $run[2])) {
+            Mage::throwException(Mage::helper('cron')->__('Invalid callback: %s::%s does not exist', $run[1], $run[2]));
+        }
+        $callback = [$helper, $run[2]];
+
+        if (empty($callback)) {
+            Mage::throwException(Mage::helper('cron')->__('No callbacks found'));
+        }
+
+        // @codingStandardsIgnoreStart
+        $result = call_user_func($callback);
+        // @codingStandardsIgnoreEnd
+
+        return $result;
     }
 }
