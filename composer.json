@@ -1,5 +1,6 @@
 {
     "name":"aoepeople/aoe_layoutconditions",
+    "replace":"fbrnc/aoe_layoutconditions",
     "type":"magento-module",
     "license":"OSL-3.0",
     "homepage":"https://github.com/aoepeople/Aoe_LayoutConditions",
