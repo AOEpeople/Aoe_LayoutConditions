@@ -2,10 +2,9 @@
 <config>
 	<modules>
 		<Aoe_LayoutConditions>
-			<version>0.2.0</version>
+			<version>0.3.0</version>
 		</Aoe_LayoutConditions>
 	</modules>
-
 	<global>
 		<helpers>
 			<aoe_layoutconditions>
@@ -13,9 +12,6 @@
 			</aoe_layoutconditions>
 		</helpers>
 		<models>
-			<!--<aoe_layoutconditions>
-				<class>Aoe_LayoutConditions_Model</class>
-			</aoe_layoutconditions>-->
 			<core>
 				<rewrite>
 					<layout>Aoe_LayoutConditions_Model_Layout</layout>
@@ -23,5 +19,4 @@
 			</core>
 		</models>
 	</global>
-
 </config>
